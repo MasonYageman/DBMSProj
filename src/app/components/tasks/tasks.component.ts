@@ -37,7 +37,7 @@ export class TasksComponent implements OnInit {
 
   onCreate(){
 
-
+    let title = "";
 
 
         if (title !== '' && description !== '' ) {
@@ -52,6 +52,12 @@ export class TasksComponent implements OnInit {
           }
 
         }
+
+
+
+
+
+
         if (title !== '' && description !== '' ) {
           if (data.title !== null || data.description !== null || data.priority === 0) {
             this.firebaseService.addTask(this.project[this.indexForProj].tasks, this.project[this.indexForProj].id);
