@@ -11,6 +11,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
 
 // 2. Add your credentials from step 1
 const config = {
@@ -28,6 +29,7 @@ const config = {
   declarations: [
     AppComponent,
     TasksComponent,
+    DeleteButtonComponent,
 
   ],
   imports: [
