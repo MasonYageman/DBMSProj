@@ -1,6 +1,6 @@
 ﻿import { Task } from "./task";
 
-export class Project{
+export class Category{
 
   title:string;
   tasks: Array<Task>;

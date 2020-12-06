@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
+import {Task} from "../../Interfaces/Task"
+import {Category} from "../../Interfaces/Category";
 
 @Component({
   selector: 'app-tasks',
@@ -20,7 +22,7 @@ export class TasksComponent implements OnInit {
   userId: string;
   started: false;
 
-  items: Observable<Project[]>;
+  items: Observable<Category[]>;
 
   theme = false;
   @Input() indexForProj: number;
