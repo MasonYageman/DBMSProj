@@ -1,2 +1,115 @@
-<p>tasks works!</p>
-<input type="text" id="newtask">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      To-Do List
+    </title>
+  </head>
+  <body>
+    <div id = "task" class = "header">
+      <h1>To-Do List</h1>
+
+      <input type = "text" id = "userIn" placeholder = "Name of task" size = 35 style = "height: 28px">  <!--text box to type the task-->
+      <span onclick = "newTask()"  class = "button">Add Task</span>  <!--creating space for the button-->
+    </div>
+
+  <!--setting up the unordered list-->
+  <ul id = "taskList">
+  </body>
+
+
+  <!--creating the new task when the button is pressed-->
+  <script>
+    function newTask()
+    {
+        var item = document.createElement("li");  //item that will be appended into the list via the textnode
+        var userIn = document.getElementById("userIn").value;   //takes the user input and puts it in a variable
+        var t = document.createTextNode(userIn);
+        item.appendChild(t);
+
+        if (userIn === '')  //if no input
+        {
+          alert("Please add a task to your To-Do List");
+        }
+
+        else    //add contents of text box into the unordered list
+        {
+          document.getElementById("taskList").appendChild(item);
+        }
+        document.getElementById("userIn").value = "";
+      }
+  </script>
+
+<!--styling add task-->
+  <style>
+    /*background color*/
+    body
+    {
+      background-color: lightgrey;
+    }
+
+    /*changing header*/
+    .header
+    {
+      text-align: center;
+    }
+
+    /*getting rid of the bullets in the list*/
+    ul
+    {
+      list-style-type: circle;  /*maybe circle - doesn't show up*/
+    }
+
+    /*spacing*/
+    ul
+    {
+      margin: 1;
+      padding: 0;
+    }
+
+    /*color on cursor hover*/
+    ul li:hover
+    {
+      background: rgb(81, 191, 211);
+    }
+
+   /*giving each task its own little rectangle*/
+   ul li
+    {
+      color: white;
+      cursor: pointer;
+      position: relative;
+      background:grey;
+      font-size: 28px;
+
+    }
+
+    /*when finishing a task - won't work because code isn't created yet for deleting tasks*/
+    ul li.checked
+    {
+      text-decoration: line-through;
+      text-decoration-color: red;
+    }
+
+    /*giving a border to the button*/
+    .button
+    {
+      padding: 6px;
+      width: 12%;
+      background: white;
+      color: black;
+      float: center;
+      text-align: center;
+      font-size: 16px;
+      cursor: auto;
+      transition: 0.3s;
+      border-radius: 0;
+    }
+  </style>
+</html>
+
+
+
+
+
+
