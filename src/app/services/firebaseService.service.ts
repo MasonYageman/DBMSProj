@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseServiceService {
+export class FirebaseService {
 
 
 
@@ -94,6 +94,25 @@ export class FirebaseServiceService {
 
   }
 
+
+  completeTask(categoryId, task) {
+    console.log(categoryId);
+    console.log(task);
+    this.deleteTask(categoryId, task);
+    return this.db.collection('Users/' + this.userId + '/projects').doc(projectID).update({
+      tasks: firebase.firestore.FieldValue.arrayUnion({
+        completed: true,
+        description: task.description,
+        editing: task.editing,
+        id: task.id,
+        title: task.title,
+        priority: task.priority,
+        countdownTimer: task.countdownTimer,
+      })
+
+    });
+  }
+
   addTask(task: Task[], id: string) {
 
     this.db.collection('/categories').doc(id).set({
@@ -113,7 +132,7 @@ export class FirebaseServiceService {
         id: '' + date.getTime(),
         title: 'Whats your first task?',
         completed: false,
-
+        dueDate: "",
         description: 'click the add the new task button',
 
 

@@ -1,2 +1,66 @@
-<p>tasks works!</p>
-<input type="text" id="newtask">
+
+<!DOCTYPE html>
+<body style="background: lightsteelblue">
+
+
+
+
+<div style="border: outset aqua;width: 25%; margin: auto;
+text-align: center; background: darkseagreen; padding: 5px; ">
+  {{category[this.category].title}}
+
+</div>
+<br><br><br><br><br><div style="text-align: center; margin: auto">
+
+  <button (click)="onCreate()" >Create a new task!</button>
+</div>
+
+<br><br><br><br><br>
+
+  <div style="width:50%; margin: auto;text-align: center;">
+
+      <label>Sort</label>
+      <select>
+        <option >
+          Sort
+        </option>
+        <option (click)="queueByPriority()">
+          Priority
+        </option>
+        <option (click)="queueByNew()">
+          Newest
+        </option>
+        <option (click)="queueByOld()">
+          Oldest
+        </option>
+      </select>
+
+  </div>
+
+
+<br>
+<div *ngFor="let task of category[this.indexForSubCategory].tasks let idx =index"
+     style="width: 50%; margin: auto; background: darkseagreen;border: outset aqua; ">
+<div style="display: flex;justify-content: space-around">
+
+  <p style="text-align: right">Priority: {{task.priority}}</p>
+  <h2>{{task.title}}</h2>
+  <p>Due Date: {{task.dueDate}}</p>
+</div>
+  <div style="display: flex; justify-content: center ">
+    <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
+
+  </div>
+
+  <div style="display: flex; justify-content: space-evenly">
+
+    <h4 style="text-align: center">{{task.description}}</h4>
+
+  </div>
+
+</div>
+
+
+
+
+</body>
