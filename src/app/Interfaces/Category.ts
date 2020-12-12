@@ -4,7 +4,8 @@ export class Category{
 
   title:string;
   tasks: Array<Task>;
-  id:string;
+  CategoryId:string;
+  ParentId:string;
   constructor(){
 
   }

@@ -33,13 +33,14 @@ export class FirebaseService {
   getCategories() {
     //   return this.db.collection('Users', ref=> ref.where('uid','==',this.userId))
     //     .snapshotChanges();
-    this.categoryCollection = this.db.collection('categories');
+    this.categoryCollection = this.db.collection('Categories');
 
     this.items = this.categoryCollection.snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
+        console.log(a.payload.doc.data())
         const data = a.payload.doc.data() as Category;
 
-        data.id = a.payload.doc.id;
+      //  data.id = a.payload.doc.id;
         console.log(data);
         return data;
       });
@@ -53,7 +54,7 @@ export class FirebaseService {
 
   }
 
-
+/*
   deleteTask(categoryID, task) {
     console.log(categoryID);
     console.log(task);
@@ -72,9 +73,9 @@ export class FirebaseService {
     });
 
 
-  }
+  }*/
 
-  updateTasks(categoryID, taskToDelete, editTask) {
+  /*updateTasks(categoryID, taskToDelete, editTask) {
 
     console.log(editTask);
     console.log(taskToDelete);
@@ -93,9 +94,9 @@ export class FirebaseService {
     });
 
   }
+*/
 
-
-  completeTask(categoryId, task) {
+ /* completeTask(categoryId, task) {
     console.log(categoryId);
     console.log(task);
     this.deleteTask(categoryId, task);
@@ -111,7 +112,7 @@ export class FirebaseService {
       })
 
     });
-  }
+  }*/
 
   addTask(task: Task[], id: string) {
 

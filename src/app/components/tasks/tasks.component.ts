@@ -16,8 +16,7 @@ export class TasksComponent implements OnInit {
   constructor(private db: AngularFirestore,
               public firebaseService: FirebaseService
   ) {
-    const things = db.collection('things').valueChanges();
-    things.subscribe(console.log);
+
   }
 
 
@@ -55,7 +54,7 @@ export class TasksComponent implements OnInit {
 
 
   completeTask(task) {
-    this.firebaseService.completeTask(this.category[this.indexForSubCategory].id, task);
+  //  this.firebaseService.completeTask(this.category[this.indexForSubCategory].id, task);
   }
 
 
@@ -76,12 +75,12 @@ export class TasksComponent implements OnInit {
           description: description,
           completed: false,
           priority: Number(priority),
-          dueDate: tempDueDate;
+          dueDate: tempDueDate,
 
         });
 
-      this.firebaseService.addTask(this.category[this.indexForSubCategory].tasks,
-        this.category[this.indexForSubCategory].id);
+      //this.firebaseService.addTask(this.category[this.indexForSubCategory].tasks,
+        //this.category[this.indexForSubCategory].id);
     }
     else
       alert("Task not filled out correctly! please try again.")

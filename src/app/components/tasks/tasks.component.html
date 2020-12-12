@@ -1,18 +1,21 @@
 
 <!DOCTYPE html>
-<body style="background: lightsteelblue">
+<body>
 
 
 
 
-<div style="border: outset aqua;width: 25%; margin: auto;
-text-align: center; background: darkseagreen; padding: 5px; ">
-  {{category[this.category].title}}
-
+<div style="border: outset aqua;width: auto; margin: auto;
+text-align: center; background: linear-gradient(darkseagreen,lightseagreen); padding: 10px; display: flex; justify-content: space-evenly ">
+  <app-add-parent-cat></app-add-parent-cat>
+  <h1>
+    {{category[0].title}}
+  </h1>
+  <app-add-parent-cat></app-add-parent-cat>
 </div>
 <br><br><br><br><br><div style="text-align: center; margin: auto">
 
-  <button (click)="onCreate()" >Create a new task!</button>
+  <button class="styled" (click)="onCreate()" >Create a new task!</button>
 </div>
 
 <br><br><br><br><br>
@@ -24,9 +27,9 @@ text-align: center; background: darkseagreen; padding: 5px; ">
         <option >
           Sort
         </option>
-        <option (click)="queueByPriority()">
+      <!--  <option (click)="queueByPriority()">
           Priority
-        </option>
+        </option>-->
         <option (click)="queueByNew()">
           Newest
         </option>
@@ -38,14 +41,31 @@ text-align: center; background: darkseagreen; padding: 5px; ">
   </div>
 
 
+<div style="display: flex; justify-content: space-evenly;  margin: auto">
+  <div >
+    <h2 style="text-align: center ">Sub Categories</h2>
+    <app-parent-categories></app-parent-categories>
+  </div>
+  <h1 >{{category[0].title}} Tasks:</h1>
+  <div >
+    <h2>Sub Categories</h2>
+    <app-sub-categories></app-sub-categories>
+  </div>
+</div>
+
+
 <br>
-<div *ngFor="let task of category[this.indexForSubCategory].tasks let idx =index"
-     style="width: 50%; margin: auto; background: darkseagreen;border: outset aqua; ">
+
+
+
+
+<div *ngFor="let task of category[1].tasks let idx =index"
+     style="width: 40%; margin: auto; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
 <div style="display: flex;justify-content: space-around">
 
-  <p style="text-align: right">Priority: {{task.priority}}</p>
+  <p class="styled" style="text-align: right">Priority: {{task.priority}}</p>
   <h2>{{task.title}}</h2>
-  <p>Due Date: {{task.dueDate}}</p>
+  <p class="styled">Due Date: {{task.dueDate}}</p>
 </div>
   <div style="display: flex; justify-content: center ">
     <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
@@ -54,13 +74,12 @@ text-align: center; background: darkseagreen; padding: 5px; ">
 
   <div style="display: flex; justify-content: space-evenly">
 
-    <h4 style="text-align: center">{{task.description}}</h4>
+    <h3 style="text-align: center">Description:</h3>
+
 
   </div>
-
+  <h4 style="text-align: center"> {{task.description}}</h4>
 </div>
-
-
-
+<br>
 
 </body>
