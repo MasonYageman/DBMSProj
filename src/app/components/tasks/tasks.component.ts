@@ -60,6 +60,7 @@ export class TasksComponent implements OnInit {
 
   onCreate() {
 
+
     let title: '', description: '';
     let priority: "";
     let resultTitle = prompt("Task Title", title);
@@ -80,7 +81,7 @@ export class TasksComponent implements OnInit {
         });
 
       //this.firebaseService.addTask(this.category[this.indexForSubCategory].tasks,
-        //this.category[this.indexForSubCategory].id);
+        //this.category[0].CategoryId);
     }
     else
       alert("Task not filled out correctly! please try again.")

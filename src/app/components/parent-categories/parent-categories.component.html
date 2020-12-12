@@ -1,5 +1,10 @@
-<div *ngFor="let cat of category let idx =index"
-     style="width: 300px; text-align: center;margin: 10px; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
-  <h1>{{cat.title}}</h1>
+
+<h2 style="text-align: center ">Parent Categories</h2>
+<div style="flex: auto;display: flex;">
+  <div *ngFor="let cat of category let idx =index"
+       style="width: 300px; text-align: center;margin: 10px; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
+    <h3>{{cat.title}}</h3>
+  </div>
 </div>
+
 

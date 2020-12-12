@@ -11,44 +11,37 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
   <h1>
     {{category[0].title}}
   </h1>
-  <app-add-parent-cat></app-add-parent-cat>
+  <app-add-sub-cat></app-add-sub-cat>
 </div>
-<br><br><br><br><br><div style="text-align: center; margin: auto">
-
-  <button class="styled" (click)="onCreate()" >Create a new task!</button>
-</div>
-
-<br><br><br><br><br>
-
-  <div style="width:50%; margin: auto;text-align: center;">
-
-      <label>Sort</label>
-      <select>
-        <option >
-          Sort
-        </option>
-      <!--  <option (click)="queueByPriority()">
-          Priority
-        </option>-->
-        <option (click)="queueByNew()">
-          Newest
-        </option>
-        <option (click)="queueByOld()">
-          Oldest
-        </option>
-      </select>
-
-  </div>
+<br><br><br>
 
 
+<h1 style="text-align: center" >{{category[0].title}} Tasks:</h1>
 <div style="display: flex; justify-content: space-evenly;  margin: auto">
   <div >
-    <h2 style="text-align: center ">Sub Categories</h2>
+
     <app-parent-categories></app-parent-categories>
   </div>
-  <h1 >{{category[0].title}} Tasks:</h1>
+  <div *ngFor="let task of category[0].tasks let idx =index"
+       style="width: 550px; margin: auto; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
+    <div style="display: flex;justify-content: space-around">
+
+      <p class="styled" style="text-align: right">Priority: {{task.priority}}</p>
+      <h2>{{task.title}}</h2>
+      <p class="styled">Due Date: {{task.dueDate}}</p>
+    </div>
+    <div style="display: flex; justify-content: center ">
+      <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
+
+    </div>
+
+    <div style="display: flex; justify-content: space-evenly">
+      <h3 style="text-align: center">Description:</h3>
+    </div>
+    <h4 style="text-align: center"> {{task.description}}</h4>
+  </div>
   <div >
-    <h2>Sub Categories</h2>
+
     <app-sub-categories></app-sub-categories>
   </div>
 </div>
@@ -59,27 +52,35 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
 
 
 
-<div *ngFor="let task of category[1].tasks let idx =index"
-     style="width: 40%; margin: auto; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
-<div style="display: flex;justify-content: space-around">
 
-  <p class="styled" style="text-align: right">Priority: {{task.priority}}</p>
-  <h2>{{task.title}}</h2>
-  <p class="styled">Due Date: {{task.dueDate}}</p>
-</div>
-  <div style="display: flex; justify-content: center ">
-    <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
-
-  </div>
-
-  <div style="display: flex; justify-content: space-evenly">
-
-    <h3 style="text-align: center">Description:</h3>
-
-
-  </div>
-  <h4 style="text-align: center"> {{task.description}}</h4>
-</div>
 <br>
+
+<div style="text-align: center; margin: auto">
+
+  <button class="styled" (click)="onCreate()" >Create a new task!</button>
+</div>
+
+<br><br>
+
+<div style="width:50%; margin: auto;text-align: center;">
+
+  <label>Sort</label>
+  <select>
+    <option >
+      Sort
+    </option>
+    <!--  <option (click)="queueByPriority()">
+        Priority
+      </option>-->
+    <option (click)="queueByNew()">
+      Newest
+    </option>
+    <option (click)="queueByOld()">
+      Oldest
+    </option>
+  </select>
+
+</div>
+<br><br>
 
 </body>
