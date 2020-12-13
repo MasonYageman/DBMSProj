@@ -135,9 +135,9 @@ refreshTaskList(){
   //
   //
   deleteTask(categoryId,task){
+     if(task.title === "Deleted task")
+       return;
     this.firebaseService.deleteTask(categoryId,task);
-
-
 
   }
 
