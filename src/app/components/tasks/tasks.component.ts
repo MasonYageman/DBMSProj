@@ -23,7 +23,7 @@ export class TasksComponent implements OnInit {
   category: Array<Category>;
   items: Observable<Category[]>;
   queryTasks: Array<Task>;
-  queryCategory: Array<Category>;
+
   currentCategoryId:string;
 
   @Input() indexForSubCategory: number;
@@ -32,15 +32,43 @@ export class TasksComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
-
-
+   ngOnInit() {
+    this.currentCategoryId = "Tasks Due today and Overdue Tasks";
     this.getAllData();
+    this.tempTasks= [];
 
-    this.currentCategoryId="All tasks";
 
   }
 
+  //gets all catagories from database
+  //
+  //
+  getAllData() {
+
+    this.items = this.firebaseService.getAllCategories();
+    this.items
+      .pipe()
+      .subscribe((result => {
+        this.category = result;
+        console.log(result);
+        console.log(this.category);
+        this.tempTasks= [];
+        for( let cat of this.category){
+          this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+        }
+        if(this.currentCategoryId==="Tasks Due today and Overdue Tasks"){
+          this.combineTasks();
+        }
+
+      }));
+
+  }
+
+
+  //changes category when a category button is pressed
+  //
+  //
 
   onSelectCategory(event){
     this.tempTasks= [];
@@ -54,52 +82,77 @@ export class TasksComponent implements OnInit {
     }
 
     //priority descending
-    this.queueByPriority();
+    this.sortByPriority();
 
   }
 
 
-  getAllData() {
-
-    this.items = this.firebaseService.getAllCategories();
-    this.items
-      .pipe()
-      .subscribe((result => {
-        this.category = result;
-        console.log(result);
-        console.log(this.category);
-        this.combineTasks();
-      }));
-
-  }
+  //takes all tasks from each category and loads them into a local task array
+  //
+  //
 
   combineTasks(){
+
+
+      console.log(this.category);
+      this.tempTasks= [];
+      const date: Date = new Date()
+      let today: string;
+      today = '' + (date.getMonth()+1)+ "/" + (date.getDate()+1) + "/" + date.getFullYear();
+
+      for( let cat of this.category){
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+      }
+
+      this.tempTasks = this.tempTasks.filter(task=> task.dueDate <= today);
+      this.sortByPriority();
+
+
+  }
+
+
+
+  //deletes task
+  //
+  //
+  deleteTask(categoryId,task){
+    this.firebaseService.deleteTask(categoryId,task);
     this.tempTasks= [];
-    const date: Date = new Date()
-    let today: string;
-    today = '' + (date.getMonth()+1)+ "/" + (date.getDate()+1) + "/" + date.getFullYear();
-    console.log("THIS IS TODAYS DATE +1",today);
+
+
     for( let cat of this.category){
-      this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
 
     }
-
-    this.tempTasks = this.tempTasks.filter(task=> task.dueDate <= today);
   }
 
 
-
-
-
-
+  //completes task
+  //
+  //
   completeTask(task) {
-  //  this.firebaseService.completeTask(this.category[this.indexForSubCategory].id, task);
+    if(task.completed === true)
+      return;
+    else
+    this.firebaseService.completeTask(task.categoryId, task);
+    this.tempTasks= [];
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
   }
 
-
+  //creates task and puts it on db
+  //
+  //
   onCreate() {
 
-    let arr =["1","2","3","4"];
+    let arr =["1","2","3","4",'4'];
     let title: '', description: '';
     let priority: "";
     let dueDate = ""
@@ -132,7 +185,8 @@ export class TasksComponent implements OnInit {
           console.log(cat);
           this.firebaseService.addTask(cat.tasks,
             this.currentCategoryId);
-          this.onSelectCategory(this.currentCategoryId);
+
+
         }
       }
 
@@ -140,29 +194,113 @@ export class TasksComponent implements OnInit {
 
     }
     else
-      alert("Task not filled out correctly! please try again.")
+      alert("Task not filled out correctly! please try again.");
+
+    this.tempTasks= [];
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
 
 
   }
 
 
+  //shows tasks due today
+  //
+  //
 
-  queueByNew(){
-    this.tempTasks.sort((n1, n2) => {
-      if (n1.priority < n2.priority) {
-        return 1;
-      }
+  queueByToday(){
+    console.log(this.category);
 
-      if (n1.priority > n2.priority) {
-        return -1;
-      }
+    this.tempTasks= [];
+    const date: Date = new Date()
+    let today: string;
+    today = '' + (date.getMonth()+1)+ "/" + (date.getDate()) + "/" + date.getFullYear();
 
-      return 0;
-    });
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
+
+    this.tempTasks = this.tempTasks.filter(task=> task.dueDate <= today);
+    this.sortByPriority();
+  }
+
+  //shows tasks due tomorrow
+  //
+  //
+
+  queueByTomorrow(){
+
+    this.tempTasks= [];
+    const date: Date = new Date()
+    let today: string;
+    today = '' + (date.getMonth()+1)+ "/" + (date.getDate()+1) + "/" + date.getFullYear();
+
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
+
+    this.tempTasks = this.tempTasks.filter(task=> task.dueDate <= today);
+    this.sortByPriority();
+  }
+
+  //shows tasks due next week
+  //
+  //
+
+  queueByWeek(){
+    console.log("CHANGING QUEUE!!");
+    this.tempTasks= [];
+    const date: Date = new Date()
+    let today: string;
+    today = '' + (date.getMonth()+1)+ "/" + (date.getDate()+7) + "/" + date.getFullYear();
+
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
+
+    this.tempTasks = this.tempTasks.filter(task=> task.dueDate <= today);
+    this.sortByPriority();
   }
 
 
-  queueByPriority(){
+  //shows tasks due today
+  //
+  //
+
+  queueByAll(){
+    this.tempTasks= [];
+
+
+    for( let cat of this.category){
+
+      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+        this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+    }
+
+    this.sortByPriority();
+  }
+
+
+  //sorts a filtered list by priority 1-4
+  //
+  //
+
+  sortByPriority(){
+    console.log(this.category);
     this.tempTasks.sort((n1, n2) => {
       if (n1.priority > n2.priority) {
         return 1;

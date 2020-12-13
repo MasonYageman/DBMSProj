@@ -40,9 +40,10 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
       <h2>{{task.title}}</h2>
       <p class="styled">Due Date: {{task.dueDate}}{{task.duedate}}</p>
     </div>
-    <div style="display: flex; justify-content: space-evenly ">
-      <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
-      <h3> {{task.categoryId}}</h3>
+    <div style="display: flex; justify-content: space-evenly " >
+      <h3 (click)="completeTask(task)" class="styled">Completed: {{task.completed}}</h3>
+      <h3 class="styled" (click)="deleteTask(task.categoryId,task)">Delete Task </h3>
+      <h3  class="styled"> {{task.categoryId}}</h3>
     </div>
 
     <div style="display: flex; justify-content: space-evenly">
@@ -61,33 +62,36 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
 
 
 <br>
-
-<div style="text-align: center; margin: auto">
+<div style="text-align: center; margin: auto" *ngIf="this.currentCategoryId==='Tasks Due today and Overdue Tasks'">
+  <button class="styled"  >Select a category to create a task!</button>
+</div>
+<div style="text-align: center; margin: auto" *ngIf="this.currentCategoryId!=='Tasks Due today and Overdue Tasks'">
 
   <button class="styled" (click)="onCreate()" >Create a new task!</button>
 </div>
 
 <br><br>
 
-<div style="width:50%; margin: auto;text-align: center;">
+<div style="text-align: center; margin: auto" *ngIf="this.currentCategoryId==='Tasks Due today and Overdue Tasks'">
+  <button class="styled"  >Select a category to queue by due date!</button>
+</div>
+<div style="text-align: center; margin: auto" *ngIf="this.currentCategoryId!=='Tasks Due today and Overdue Tasks'">
+  <div style="width:50%; margin: auto;;display: flex; justify-content: space-evenly">
 
-  <label>Sort</label>
-  <select>
-    <option >
-      Sort
-    </option>
-    <!--  <option (click)="queueByPriority()">
-        Priority
-      </option>-->
-    <option (click)="queueByNew()">
-      Newest
-    </option>
-    <option (click)="queueByPriority()">
-      Oldest
-    </option>
-  </select>
+    <input type="radio" id="today" name="age" (click)="queueByToday()">
+    <label for="today">Due Today</label><br>
+    <input type="radio" id="tomorrow" name="age"  (click)="queueByTomorrow()">
+    <label for="tomorrow">Due Tomorrow</label><br>
+    <input type="radio" id="week" name="age"  (click)="queueByWeek()">
+    <label for="week">Due Next Week</label><br><br>
+    <input type="radio" id="all" name="age"  (click)="queueByAll()">
+    <label for="all">All</label><br><br>
+
+
+  </div>
 
 </div>
+
 <br><br>
 
 </body>

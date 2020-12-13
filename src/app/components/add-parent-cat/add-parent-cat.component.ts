@@ -39,8 +39,8 @@ export class AddParentCatComponent implements OnInit {
 
     const title = '';
     let parentId = '';
-    const result = prompt('Category Title', title);
-    let resultParentId = prompt('Parent Id', title);
+    const result = prompt('Pleas eneter Category Title', title);
+    let resultParentId = prompt('Please enter Parent category Id if this is a parent category press 0', title);
     if (result === null || result === '') {
       return;
     }

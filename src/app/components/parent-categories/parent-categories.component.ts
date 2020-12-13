@@ -73,11 +73,13 @@ export class ParentCategoriesComponent implements OnInit {
 
 
   deletCategory(catId){
+    if(catId ==="No Category")
+      return;
     this.tempTasks = [];
     for( let cat of this.category){
       if(cat.CategoryId === catId || cat.ParentId === catId){
         for( let task of cat.tasks){
-          task.categoryId ="Empty";
+          task.categoryId ="No Category";
           this.firebaseService.updateEmptyTasks(task);
 
         }

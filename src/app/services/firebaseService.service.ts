@@ -39,11 +39,10 @@ export class FirebaseService {
 
     this.items = this.categoryCollection.snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
-        console.log(a.payload.doc.data())
+
         const data = a.payload.doc.data() as Category;
 
-      //  data.id = a.payload.doc.id;
-        console.log(data);
+
         return data;
       });
     }));
@@ -60,26 +59,24 @@ export class FirebaseService {
 
   }
 
-/*
   deleteTask(categoryID, task) {
     console.log(categoryID);
     console.log(task);
-    return this.db.collection( '/categories').doc(categoryID).update({
+    return this.db.collection( '/Categories').doc(categoryID).update({
       tasks: firebase.firestore.FieldValue.arrayRemove({
         completed: task.completed,
         description: task.description,
-
+        categoryId: task.categoryId,
         id: task.id,
         title: task.title,
         priority: task.priority,
-
-
+        dueDate: task.dueDate,
 
       })
     });
 
 
-  }*/
+  }
   updateEmptyTasks( taskToEmpty) {
 
     console.log(taskToEmpty);
@@ -100,43 +97,24 @@ export class FirebaseService {
     });
 
   }
-  /*updateTasks(categoryID, taskToDelete, editTask) {
 
-    console.log(editTask);
-    console.log(taskToDelete);
-    this.deleteTask(categoryID, taskToDelete);
-    return this.db.collection('/categories').doc(categoryID).update({
-      tasks: firebase.firestore.FieldValue.arrayUnion({
-        completed: editTask.completed,
-        description: editTask.description,
-
-        id: editTask.id,
-        title: editTask.title,
-        priority: editTask.priority,
-
-      })
-
-    });
-
-  }
-*/
- /* completeTask(categoryId, task) {
+  completeTask(categoryId, task) {
     console.log(categoryId);
     console.log(task);
-    this.deleteTask(categoryId, task);
-    return this.db.collection('Users/' + this.userId + '/projects').doc(projectID).update({
+    this.deleteTask(categoryId, task).then(r => null);
+    return this.db.collection('Categories').doc(categoryId).update({
       tasks: firebase.firestore.FieldValue.arrayUnion({
         completed: true,
         description: task.description,
-        editing: task.editing,
+        dueDate: task.dueDate,
         id: task.id,
         title: task.title,
         priority: task.priority,
-        countdownTimer: task.countdownTimer,
+        categoryId: task.categoryId,
       })
 
     });
-  }*/
+  }
 
   addTask(task: Task[], id: string) {
 
@@ -168,7 +146,7 @@ export class FirebaseService {
       })
     }, {merge: true});
 
-    console.log(this.db.doc('/categories/' + title).get());
+    console.log(this.db.doc('/Categories/' + title).get());
 
 
   }
