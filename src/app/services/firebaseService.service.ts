@@ -5,7 +5,9 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Category} from '../interfaces/Category';
 import { map, take } from 'rxjs/operators';
 import {Task} from '../interfaces/task';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 
 
 
@@ -30,7 +32,7 @@ export class FirebaseService {
 
 
 
-  getCategories() {
+  getAllCategories() {
     //   return this.db.collection('Users', ref=> ref.where('uid','==',this.userId))
     //     .snapshotChanges();
     this.categoryCollection = this.db.collection('Categories');
@@ -48,8 +50,12 @@ export class FirebaseService {
     return this.items;
   }
 
+
+
+
+
   deleteCategories(data) {
-    return this.db.collection('/categories').doc(data).delete();
+    return this.db.collection('/Categories').doc(data).delete();
 
 
   }
@@ -74,7 +80,26 @@ export class FirebaseService {
 
 
   }*/
+  updateEmptyTasks( taskToEmpty) {
 
+    console.log(taskToEmpty);
+
+
+    return this.db.collection('/Categories').doc("No Category").update({
+      tasks: firebase.firestore.FieldValue.arrayUnion({
+        completed: taskToEmpty.completed,
+        description: taskToEmpty.description,
+        categoryId: taskToEmpty.categoryId,
+        id: taskToEmpty.id,
+        title: taskToEmpty.title,
+        priority: taskToEmpty.priority,
+        dueDate: taskToEmpty.dueDate,
+
+      })
+
+    });
+
+  }
   /*updateTasks(categoryID, taskToDelete, editTask) {
 
     console.log(editTask);
@@ -95,7 +120,6 @@ export class FirebaseService {
 
   }
 */
-
  /* completeTask(categoryId, task) {
     console.log(categoryId);
     console.log(task);
@@ -116,34 +140,35 @@ export class FirebaseService {
 
   addTask(task: Task[], id: string) {
 
-    this.db.collection('/categories').doc(id).set({
+    this.db.collection('/Categories').doc(id).set({
       tasks: task,
     }, {merge: true});
 
   }
 
-  addCategory(title) {
+  addCategory(title,parentId) {
 
     const date: Date = new Date();
     const ranNum = Math.floor(Math.random() * 1000000).toString();
-    this.db.doc('/projects/' + title).set({
-      id: ranNum,
-      title,
+    this.db.doc('/Categories/' + title).set({
+      ParentId: parentId,
+      CategoryId: title,
+      title: title,
       tasks: Array<Task>({
         id: '' + date.getTime(),
         title: 'Whats your first task?',
         completed: false,
-        dueDate: "",
+        dueDate: "12/12/2020",
         description: 'click the add the new task button',
 
-
+        categoryId:title,
         priority: 1,
 
 
       })
     }, {merge: true});
 
-    console.log(this.db.doc('/categories/' + ranNum).get());
+    console.log(this.db.doc('/categories/' + title).get());
 
 
   }
