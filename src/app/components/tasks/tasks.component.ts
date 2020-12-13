@@ -160,7 +160,7 @@ export class TasksComponent implements OnInit {
 
     let resultDescription = prompt("Task Description", description);
 
-    let resultPriority = prompt("Task Priority", priority);
+    let resultPriority = prompt("Task Priority: Enter value 1-4", priority);
 
     const date: Date = new Date();
     let tempDueDate = prompt("Enter date in 'mm/dd/yyyy' format:", dueDate);
