@@ -35,7 +35,7 @@ export class TasksComponent implements OnInit {
    ngOnInit() {
     this.currentCategoryId = "Tasks Due today and Overdue Tasks";
     this.getAllData();
-    this.tempTasks= [];
+
 
 
   }
@@ -52,10 +52,20 @@ export class TasksComponent implements OnInit {
         this.category = result;
         console.log(result);
         console.log(this.category);
-        this.tempTasks= [];
-        for( let cat of this.category){
-          this.tempTasks = this.tempTasks.concat(cat.tasks);
+        if(this.currentCategoryId !=="Tasks Due today and Overdue Tasks")
+        {
+          this.tempTasks= [];
 
+
+          for( let cat of this.category){
+
+            if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+              this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+          }
+
+          //priority descending
+          this.sortByPriority();
         }
         if(this.currentCategoryId==="Tasks Due today and Overdue Tasks"){
           this.combineTasks();
@@ -112,21 +122,23 @@ export class TasksComponent implements OnInit {
   }
 
 
+refreshTaskList(){
+  this.tempTasks= [];
+  for( let cat of this.category){
 
+    if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
+      this.tempTasks = this.tempTasks.concat(cat.tasks);
+
+  }
+}
   //deletes task
   //
   //
   deleteTask(categoryId,task){
     this.firebaseService.deleteTask(categoryId,task);
-    this.tempTasks= [];
 
 
-    for( let cat of this.category){
 
-      if(cat.CategoryId === this.currentCategoryId || cat.ParentId === this.currentCategoryId)
-        this.tempTasks = this.tempTasks.concat(cat.tasks);
-
-    }
   }
 
 
