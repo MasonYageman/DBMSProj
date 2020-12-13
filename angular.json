@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "DMBSproj"
+    }
+  },
+  "defaultProject": "DMBSproj",
+  "cli": {
+    "analytics": "596a5a65-4699-42e6-8faf-538db9c0dee0"
+  }
 }

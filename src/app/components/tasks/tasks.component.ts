@@ -84,7 +84,7 @@ export class TasksComponent implements OnInit {
         //this.category[0].CategoryId);
     }
     else
-      alert("Task not filled out correctly! please try again.")
+      alert("Task not filled out correctly. Please try again.")
 
 
   }

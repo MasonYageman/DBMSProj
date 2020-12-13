@@ -1,8 +1,9 @@
-.styled {
+.styled2 {
   border: 0;
-  line-height: 2.5;
+  line-height: 5.5; //makes a taller button so that it spaces the div evenly from top to bottom
   padding: 0 20px;
   font-size: 1rem;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px 1px #000;
@@ -16,11 +17,11 @@
   inset -2px -2px 3px rgba(0, 0, 0, .6);
 }
 
-.styled:hover {
-  background-color: rgba(255, 0, 0, 1);
+.styled2:hover {
+  background-color: rgb(190, 190, 190);
 }
 
-.styled:active {
+.styled2:active {
   box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
   inset 2px 2px 3px rgba(0, 0, 0, .6);
 }

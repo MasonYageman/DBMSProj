@@ -2,43 +2,42 @@
 <!DOCTYPE html>
 <body>
 
-
-
-
-<div style="border: outset aqua;width: auto; margin: auto;
+<div style="border: outset aqua; width: auto; margin: auto;
 text-align: center; background: linear-gradient(darkseagreen,lightseagreen); padding: 10px; display: flex; justify-content: space-evenly ">
-  <app-add-parent-cat></app-add-parent-cat>
+  <app-add-parent-cat></app-add-parent-cat> <!--adds left side button for creating parent category-->
   <h1>
-    {{category[0].title}}
+    {{category[0].title}} <!--this is hard coded in, how do we make sure that it changes/ do we need it to change-->
   </h1>
-  <app-add-sub-cat></app-add-sub-cat>
+  <app-add-sub-cat></app-add-sub-cat> <!--adds right side button for creating sub category-->
 </div>
 <br><br><br>
 
-
 <h1 style="text-align: center" >{{category[0].title}} Tasks:</h1>
+<p style = "text-align: center;"></p>  <!--want to display the date under h1 but dont know how-->
+
+
+
 <div style="display: flex; justify-content: space-evenly;  margin: auto">
   <div >
-
     <app-parent-categories></app-parent-categories>
   </div>
   <div *ngFor="let task of category[0].tasks let idx =index"
        style="width: 550px; margin: auto; background: linear-gradient(darkseagreen,lightseagreen) ;border: outset aqua; ">
     <div style="display: flex;justify-content: space-around">
 
-      <p class="styled" style="text-align: right">Priority: {{task.priority}}</p>
+      <p class="styled">Priority: {{task.priority}}</p>
       <h2>{{task.title}}</h2>
       <p class="styled">Due Date: {{task.dueDate}}</p>
     </div>
     <div style="display: flex; justify-content: center ">
       <h3>Completed:  <input type="checkbox"  (click)="completeTask(task.id)" style="margin: auto"></h3>
-
     </div>
 
     <div style="display: flex; justify-content: space-evenly">
-      <h3 style="text-align: center">Description:</h3>
+      <h3 style="text-align: center">Description: {{task.description}}
+        <!--<p style="text-align: center"> {{task.description}}</p>--></h3>
     </div>
-    <h4 style="text-align: center"> {{task.description}}</h4>
+    
   </div>
   <div >
 
@@ -57,7 +56,7 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
 
 <div style="text-align: center; margin: auto">
 
-  <button class="styled" (click)="onCreate()" >Create a new task!</button>
+  <button class="styled3" (click)="onCreate()" >Create a new task!</button>
 </div>
 
 <br><br>
@@ -83,4 +82,6 @@ text-align: center; background: linear-gradient(darkseagreen,lightseagreen); pad
 </div>
 <br><br>
 
+
 </body>
+
